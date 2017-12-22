@@ -13,7 +13,8 @@ object Main {
     val targetPath = "E:\\output"
     val fromDate = "2017-12-22 16:30:00"
     val sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-    val filesList = mutableListOf<String>()
+    val changedList = mutableListOf<String>()
+    val packedList = mutableListOf<String>()
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -26,9 +27,16 @@ object Main {
 
     fun printFileList() {
         val file = File("$targetPath\\readme.txt")
-        filesList.forEach { file.appendText("$it\r\n") }
+        file.appendText("变动文件：\r\n")
+        changedList.forEach { file.appendText("$it\r\n") }
+        file.appendText("\r\n")
+
+        file.appendText("打包文件：\r\n")
+        packedList.forEach { file.appendText("$it\r\n") }
+
         file.appendText("\r\n")
         file.appendText("如有properties配置文件，需另外处理")
+
     }
 
     /**
@@ -60,7 +68,7 @@ object Main {
     fun copyFiles(files: Sequence<File>) {
         files.forEach {
             println(it.path)
-            filesList.add(it.path)
+            changedList.add(it.path)
             when {
                 it.path.endsWith(".java") -> copyJavaFiles(it.path)
                 it.path.endsWith(".jsp") -> copyJspFiles(it.path)
@@ -76,40 +84,64 @@ object Main {
         var targetFilePath = path.replace(projectPath, targetPath)
         targetFilePath = targetFilePath.replace("\\src\\","\\WEB-INF\\classes\\")
         File(path).copyTo(File(targetFilePath),true)
+        packedList.add(targetFilePath)
     }
 
     fun copyStaticFiles(path: String) {
         var targetFilePath = path.replace(projectPath, targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot","")
         File(path).copyTo(File(targetFilePath),true)
+        packedList.add(targetFilePath)
     }
 
     fun copyJspFiles(path: String) {
         var targetFilePath = path.replace(projectPath, targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot","")
         File(path).copyTo(File(targetFilePath),true)
+        packedList.add(targetFilePath)
     }
 
 
-    fun copyJavaFiles(path: String) {
+    fun copyJavaFiles(path: String,getRelated: Boolean =true) {
+        if (!File(path).exists()) {
+            println("$path 不存在")
+            return
+        }
 
+        // service impl
         if (path.contains("_SERVICE")) {
             var fromFilePath = path.replace("\\src\\","\\WebRoot\\WEB-INF\\classes\\")
             fromFilePath = fromFilePath.replace(".java",".class")
             var targetFilePath = fromFilePath.replace(projectPath, targetPath)
             targetFilePath = targetFilePath.replace("\\WebRoot","")
             File(fromFilePath).copyTo(File(targetFilePath),true)
+            packedList.add(targetFilePath)
 
-            // TODO IService
+            // IService
+            if (getRelated) {
+                copyJavaFiles(ServicePathUtils.getSuperInterface(path),false)
+            }
 
             return
         }
+
+        // IService
+        if (path.contains("LIANLIAN_COMMON") && path.endsWith("Service.java")) {
+            // impl
+            if (getRelated) {
+                copyJavaFiles(ServicePathUtils.getServiceImpl(path),false)
+            }
+        }
+
         var fromFilePath = classPath + path.substring(path.indexOf("\\src\\")+4)
         fromFilePath = fromFilePath.replace(".java",".class")
         var targetFilePath = fromFilePath.replace(projectPath, targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot","")
         File(fromFilePath).copyTo(File(targetFilePath),true)
+        packedList.add(targetFilePath)
     }
+
+
 
     /**
      * get modified files
