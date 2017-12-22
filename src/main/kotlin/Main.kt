@@ -8,8 +8,9 @@ import java.util.*
  */
 object Main {
     val projectPath = "E:\\workspace"
+    val classPath = "$projectPath\\LIANLIAN_MNG\\WebRoot\\WEB-INF\\classes\\"
     val targetPath = "E:\\output"
-    val fromDate = "2017-12-21 12:30:00"
+    val fromDate = "2017-12-22 12:30:00"
     val sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     val filesList = mutableListOf<String>()
 
@@ -23,14 +24,28 @@ object Main {
     }
 
     fun printFileList() {
-
+        val file = File("$targetPath\\readme.txt")
+        filesList.forEach { file.appendText("$it\r\n") }
+        file.appendText("\r\n")
+        file.appendText("如有properties配置文件，需另外处理")
     }
 
     /**
      * pack up war
      */
     fun packup(targetPath: String) {
+        val rt = Runtime.getRuntime()
+        File(targetPath).walk().maxDepth(1)
+                .filter { it.isDirectory }
+                .filter { it.name != "output"}
+                .forEach { it.renameTo(File("$it.war")) }
 
+        File(targetPath).walk().maxDepth(1)
+                .filter { it.isDirectory }
+                .filter { it.name != "output"}
+                .forEach {
+                    rt.exec("cmd /C cd /D $targetPath && jar cfM ${it.name}.zip ${it.name}/")
+                }
     }
 
     fun clearTargetPath() {
@@ -49,9 +64,17 @@ object Main {
                 it.path.endsWith(".java") -> copyJavaFiles(it.path)
                 it.path.endsWith(".jsp") -> copyJspFiles(it.path)
                 it.path.contains("LIANLIAN_STATIC") -> copyStaticFiles(it.path)
+                it.path.endsWith(".properties") -> null
+                it.path.endsWith(".xml") -> copyXmlFiles(it.path)
                 else -> it.copyTo(File(it.path.replace(projectPath,targetPath)),true)
             }
         }
+    }
+
+    fun copyXmlFiles(path: String) {
+        var targetFilePath = path.replace(projectPath, targetPath)
+        targetFilePath = targetFilePath.replace("\\src\\","\\WEB-INF\\classes\\")
+        File(path).copyTo(File(targetFilePath),true)
     }
 
     fun copyStaticFiles(path: String) {
@@ -66,10 +89,13 @@ object Main {
         File(path).copyTo(File(targetFilePath),true)
     }
 
-    // TODO
+
     fun copyJavaFiles(path: String) {
-        var targetFilePath = path.replace(projectPath, targetPath)
-        File(path).copyTo(File(targetFilePath),true)
+        var fromFilePath = classPath + path.substring(path.indexOf("\\src\\")+4)
+        fromFilePath = fromFilePath.replace(".java",".class")
+        var targetFilePath = fromFilePath.replace(projectPath, targetPath)
+        targetFilePath = targetFilePath.replace("\\WebRoot","")
+        File(fromFilePath).copyTo(File(targetFilePath),true)
     }
 
     /**
