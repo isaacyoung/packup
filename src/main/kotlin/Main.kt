@@ -8,9 +8,10 @@ import java.util.*
  */
 object Main {
     val projectPath = "E:\\workspace"
-    val classPath = "$projectPath\\LIANLIAN_MNG\\WebRoot\\WEB-INF\\classes\\"
+    val mainProject = "LIANLIAN_MNG"
+    val classPath = "$projectPath\\$mainProject\\WebRoot\\WEB-INF\\classes\\"
     val targetPath = "E:\\output"
-    val fromDate = "2017-12-22 12:30:00"
+    val fromDate = "2017-12-22 16:30:00"
     val sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     val filesList = mutableListOf<String>()
 
@@ -91,6 +92,18 @@ object Main {
 
 
     fun copyJavaFiles(path: String) {
+
+        if (path.contains("_SERVICE")) {
+            var fromFilePath = path.replace("\\src\\","\\WebRoot\\WEB-INF\\classes\\")
+            fromFilePath = fromFilePath.replace(".java",".class")
+            var targetFilePath = fromFilePath.replace(projectPath, targetPath)
+            targetFilePath = targetFilePath.replace("\\WebRoot","")
+            File(fromFilePath).copyTo(File(targetFilePath),true)
+
+            // TODO IService
+
+            return
+        }
         var fromFilePath = classPath + path.substring(path.indexOf("\\src\\")+4)
         fromFilePath = fromFilePath.replace(".java",".class")
         var targetFilePath = fromFilePath.replace(projectPath, targetPath)
