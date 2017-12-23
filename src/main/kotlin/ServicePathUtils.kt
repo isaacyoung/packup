@@ -14,7 +14,7 @@ object ServicePathUtils {
         }
 
         var name = "I" + File(path).name
-        name = name.replace("Impl","")
+        name = name.replace("Impl", "")
 
         return superPath + name
     }
@@ -54,7 +54,7 @@ object ServicePathUtils {
         }
 
         var name = File(path).name.substring(1)
-        name = name.replace(".java","Impl.java")
+        name = name.replace(".java", "Impl.java")
 
         return implPath + name
     }

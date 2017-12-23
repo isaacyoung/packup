@@ -16,7 +16,7 @@ val config = configBuilder {
     targetPath = "E:\\output"
 
     // 是否根据svn版本号获取。false：根据文件修改时间获取
-    isFromSvn =  true
+    isFromSvn = true
 
     // 获取修改时间之后的变动文件
     fromDate = "2017-12-22 16:30:00"

@@ -27,7 +27,7 @@ class Config : Tag("config") {
 
     val svnList = arrayListOf<Svn>()
 
-    fun svn(url:String,init: Svn.() -> Unit): Svn {
+    fun svn(url: String, init: Svn.() -> Unit): Svn {
         val svn = Svn()
         svn.url = url
         svn.init()
@@ -40,7 +40,7 @@ class Svn : Tag("svn") {
     lateinit var url: String
     val revisionList = arrayListOf<Int>()
 
-    fun add(value:Int) {
+    fun add(value: Int) {
         revisionList.add(value)
     }
 
