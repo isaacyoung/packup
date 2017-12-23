@@ -7,11 +7,6 @@ import java.util.*
  * create by isaac at 2017/12/22 8:56
  */
 object Main {
-    val projectPath = "E:\\workspace"
-    val mainProject = "LIANLIAN_MNG"
-    val classPath = "$projectPath\\$mainProject\\WebRoot\\WEB-INF\\classes\\"
-    val targetPath = "E:\\output"
-    val fromDate = "2017-12-22 16:30:00"
     val sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     val changedList = mutableListOf<String>()
     val packedList = mutableListOf<String>()
@@ -21,12 +16,12 @@ object Main {
         clearTargetPath()
         val files = getFiles()
         copyFiles(files)
-        packup(targetPath)
+        packup(config.targetPath)
         printFileList()
     }
 
     fun printFileList() {
-        val file = File("$targetPath\\readme.txt")
+        val file = File("${config.targetPath}\\readme.txt")
         file.appendText("变动文件：\r\n")
         changedList.forEach { file.appendText("$it\r\n") }
         file.appendText("\r\n")
@@ -58,14 +53,14 @@ object Main {
     }
 
     fun clearTargetPath() {
-        val file = File(targetPath)
+        val file = File(config.targetPath)
         if (file.exists()) {
             file.deleteRecursively()
         }
     }
 
 
-    fun copyFiles(files: Sequence<File>) {
+    fun copyFiles(files: List<File>) {
         files.forEach {
             println(it.path)
             changedList.add(it.path)
@@ -75,27 +70,27 @@ object Main {
                 it.path.contains("LIANLIAN_STATIC") -> copyStaticFiles(it.path)
                 it.path.endsWith(".properties") -> null
                 it.path.endsWith(".xml") -> copyXmlFiles(it.path)
-                else -> it.copyTo(File(it.path.replace(projectPath,targetPath)),true)
+                else -> it.copyTo(File(it.path.replace(config.projectPath,config.targetPath)),true)
             }
         }
     }
 
     fun copyXmlFiles(path: String) {
-        var targetFilePath = path.replace(projectPath, targetPath)
+        var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\src\\","\\WEB-INF\\classes\\")
         File(path).copyTo(File(targetFilePath),true)
         packedList.add(targetFilePath)
     }
 
     fun copyStaticFiles(path: String) {
-        var targetFilePath = path.replace(projectPath, targetPath)
+        var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot","")
         File(path).copyTo(File(targetFilePath),true)
         packedList.add(targetFilePath)
     }
 
     fun copyJspFiles(path: String) {
-        var targetFilePath = path.replace(projectPath, targetPath)
+        var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot","")
         File(path).copyTo(File(targetFilePath),true)
         packedList.add(targetFilePath)
@@ -112,7 +107,7 @@ object Main {
         if (path.contains("_SERVICE")) {
             var fromFilePath = path.replace("\\src\\","\\WebRoot\\WEB-INF\\classes\\")
             fromFilePath = fromFilePath.replace(".java",".class")
-            var targetFilePath = fromFilePath.replace(projectPath, targetPath)
+            var targetFilePath = fromFilePath.replace(config.projectPath, config.targetPath)
             targetFilePath = targetFilePath.replace("\\WebRoot","")
             File(fromFilePath).copyTo(File(targetFilePath),true)
             packedList.add(targetFilePath)
@@ -133,24 +128,34 @@ object Main {
             }
         }
 
-        var fromFilePath = classPath + path.substring(path.indexOf("\\src\\")+4)
+        var fromFilePath = config.classPath + path.substring(path.indexOf("\\src\\")+4)
         fromFilePath = fromFilePath.replace(".java",".class")
-        var targetFilePath = fromFilePath.replace(projectPath, targetPath)
+        var targetFilePath = fromFilePath.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot","")
         File(fromFilePath).copyTo(File(targetFilePath),true)
         packedList.add(targetFilePath)
     }
 
-
-
     /**
      * get modified files
      */
-    fun getFiles() = File(projectPath).walk().maxDepth(Int.MAX_VALUE)
+    fun getFiles(): List<File> {
+        return when {
+            config.isFromSvn -> getSvnFiles()
+            else -> getModifiedFiles()
+        }
+    }
+
+    fun getModifiedFiles() = File(config.projectPath).walk().maxDepth(Int.MAX_VALUE)
             .filter { !it.path.contains(".metadata") && !it.path.contains(".svn")  && !it.path.contains("\\classes\\")}
             .filter { it.path.contains("\\src\\") || it.path.contains("\\WebRoot\\") }
             .filter { it.isFile }
-            .filter { it.lastModified() >= getDate(fromDate) }
+            .filter { it.lastModified() >= getDate(config.fromDate) }
+            .toList()
+
+    fun getSvnFiles(): List<File> {
+        return SvnClient.getFilesByRevision()
+    }
 
 
     fun showDate(date: Long): String {

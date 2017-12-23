@@ -8,7 +8,7 @@ object ServicePathUtils {
 
     fun getSuperInterface(path: String): String {
         // TODO
-        var superPath = Main.projectPath + "\\LIANLIAN_COMMON\\src\\"
+        var superPath = config.projectPath + "\\LIANLIAN_COMMON\\src\\"
         when {
             path.contains("com\\weixin\\street\\service\\impl") -> superPath += "com\\jieka\\xiaofubao\\service\\wx\\street\\"
         }
@@ -21,7 +21,7 @@ object ServicePathUtils {
 
     fun getServiceImpl(path: String): String {
         // TODO
-        var implPath = Main.projectPath
+        var implPath = config.projectPath
         when {
             path.contains("com\\jieka\\xiaofubao\\service\\wx\\street") -> implPath += "\\LIANLIAN_PARKSTREET_SERVICE\\src\\com\\weixin\\street\\service\\impl\\"
             path.contains("com\\jieka\\xiaofubao\\service\\wx\\school\\fleamarket") -> implPath += "\\LIANLIAN_WXSCHOOL_SERVICE\\src\\com\\jieka\\xiaofubao\\service\\wx\\fleamarket\\impl\\"
