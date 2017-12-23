@@ -79,6 +79,9 @@ object PackUpManager {
         files.forEach {
             println(it.path)
             changedList.add(it.path)
+            if (it.isDirectory) {
+                return@forEach
+            }
             when {
                 it.path.endsWith(".java") -> copyJavaFiles(it.path, !config.isFromSvn)
                 it.path.endsWith(".jsp") -> copyJspFiles(it.path)

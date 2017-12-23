@@ -25,6 +25,9 @@ object SvnClient {
                 ) {
                     it.changedPaths.forEach { _, u ->
                         val path = u.toString()
+                        if (path.endsWith(")")) {
+                            return@forEach
+                        }
                         result.add(File(config.projectPath + path.substring(path.lastIndexOf("/LIANLIAN_"))))
                     }
 

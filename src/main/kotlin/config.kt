@@ -29,7 +29,12 @@ val config = configBuilder {
     // svn 版本号
 
     svn("http://192.168.1.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/LIANLIAN_MNG/") {
-        add(36525)
+        add(36439)
+        add(36455)
+    }
+
+    svn("http://192.168.1.13/svn/LIANLIAN_WXSCHOOL/trunk/LIANLIAN_WXSCHOOL_SERVICE/") {
+        add(4589)
     }
 
 }
