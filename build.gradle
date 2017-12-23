@@ -20,6 +20,8 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile group: 'org.tmatesoft.svnkit', name: 'svnkit', version: '1.9.0'
+
 }
 
 compileKotlin {
