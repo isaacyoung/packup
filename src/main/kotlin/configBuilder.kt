@@ -7,10 +7,7 @@
 annotation class TagMarker
 
 @TagMarker
-abstract class Tag(val name: String) {
-
-}
-
+abstract class Tag(val name: String)
 
 fun configBuilder(init: Config.() -> Unit): Config {
     val config = Config()

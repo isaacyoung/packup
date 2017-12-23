@@ -5,7 +5,7 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil
 import java.io.File
 
 /**
- *
+ * svn客户端
  * create by isaac at 2017/12/23 8:55
  */
 object SvnClient {
@@ -34,22 +34,4 @@ object SvnClient {
         return result
     }
 
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-
-        val options = SVNWCUtil.createDefaultOptions(true)
-        val clientManager = SVNClientManager.newInstance(options, "yangzh", "123456")
-        clientManager.logClient.doLog(
-                SVNURL.parseURIEncoded("http://192.168.1.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/LIANLIAN_MNG/"),
-                arrayOf("."),
-                SVNRevision.create(36525), SVNRevision.create(36525), SVNRevision.create(36525), true, true, Long.MAX_VALUE
-        ) {
-            println(it.author)
-            println(it.message)
-            it.changedPaths.forEach { _, u -> println(u) }
-
-        }
-
-    }
 }

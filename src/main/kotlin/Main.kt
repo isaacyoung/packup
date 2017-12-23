@@ -13,13 +13,21 @@ object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        // 删除目标文件夹
         clearTargetPath()
+        // 获取变动文件
         val files = getFiles()
+        // 复制到目标文件夹
         copyFiles(files)
+        // 打包
         packup(config.targetPath)
+        // 核对清单
         printFileList()
     }
 
+    /**
+     * 核对清单
+     */
     fun printFileList() {
         val file = File("${config.targetPath}\\readme.txt")
         file.appendText("变动文件：\r\n")
@@ -35,7 +43,8 @@ object Main {
     }
 
     /**
-     * pack up war
+     * 打包
+     * pack up zip
      */
     fun packup(targetPath: String) {
         val rt = Runtime.getRuntime()
@@ -52,6 +61,9 @@ object Main {
                 }
     }
 
+    /**
+     * 删除目标文件夹
+     */
     fun clearTargetPath() {
         val file = File(config.targetPath)
         if (file.exists()) {
@@ -59,13 +71,15 @@ object Main {
         }
     }
 
-
+    /**
+     * 复制变动文件
+     */
     fun copyFiles(files: List<File>) {
         files.forEach {
             println(it.path)
             changedList.add(it.path)
             when {
-                it.path.endsWith(".java") -> copyJavaFiles(it.path)
+                it.path.endsWith(".java") -> copyJavaFiles(it.path, !config.isFromSvn)
                 it.path.endsWith(".jsp") -> copyJspFiles(it.path)
                 it.path.contains("LIANLIAN_STATIC") -> copyStaticFiles(it.path)
                 it.path.endsWith(".properties") -> null
@@ -75,6 +89,9 @@ object Main {
         }
     }
 
+    /**
+     * 复制xml文件
+     */
     fun copyXmlFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\src\\","\\WEB-INF\\classes\\")
@@ -82,6 +99,9 @@ object Main {
         packedList.add(targetFilePath)
     }
 
+    /**
+     * 复制静态文件
+     */
     fun copyStaticFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot","")
@@ -89,6 +109,9 @@ object Main {
         packedList.add(targetFilePath)
     }
 
+    /**
+     * 复制jsp文件
+     */
     fun copyJspFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot","")
@@ -96,8 +119,10 @@ object Main {
         packedList.add(targetFilePath)
     }
 
-
-    fun copyJavaFiles(path: String,getRelated: Boolean =true) {
+    /**
+     * 复制java文件
+     */
+    fun copyJavaFiles(path: String,getRelated: Boolean =false) {
         if (!File(path).exists()) {
             println("$path 不存在")
             return
@@ -114,7 +139,7 @@ object Main {
 
             // IService
             if (getRelated) {
-                copyJavaFiles(ServicePathUtils.getSuperInterface(path),false)
+                copyJavaFiles(ServicePathUtils.getSuperInterface(path))
             }
 
             return
@@ -124,7 +149,7 @@ object Main {
         if (path.contains("LIANLIAN_COMMON") && path.endsWith("Service.java")) {
             // impl
             if (getRelated) {
-                copyJavaFiles(ServicePathUtils.getServiceImpl(path),false)
+                copyJavaFiles(ServicePathUtils.getServiceImpl(path))
             }
         }
 
@@ -137,6 +162,7 @@ object Main {
     }
 
     /**
+     * 获取变动文件
      * get modified files
      */
     fun getFiles(): List<File> {
@@ -146,6 +172,9 @@ object Main {
         }
     }
 
+    /**
+     * 根据修改日期获取
+     */
     fun getModifiedFiles() = File(config.projectPath).walk().maxDepth(Int.MAX_VALUE)
             .filter { !it.path.contains(".metadata") && !it.path.contains(".svn")  && !it.path.contains("\\classes\\")}
             .filter { it.path.contains("\\src\\") || it.path.contains("\\WebRoot\\") }
@@ -153,6 +182,9 @@ object Main {
             .filter { it.lastModified() >= getDate(config.fromDate) }
             .toList()
 
+    /**
+     * 根据svn版本号获取
+     */
     fun getSvnFiles(): List<File> {
         return SvnClient.getFilesByRevision()
     }
