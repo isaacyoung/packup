@@ -8,8 +8,9 @@ import java.util.*
  */
 object PackUpManager {
     val sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-    val changedList = mutableListOf<String>()
-    val packedList = mutableListOf<String>()
+    val changedProjectsList = hashSetOf<String>()
+    val changedFilesList = mutableListOf<String>()
+    val packedFilesList = mutableListOf<String>()
 
 
     // 入口
@@ -18,6 +19,8 @@ object PackUpManager {
         clearTargetPath()
         // 获取变动文件
         val files = getFiles()
+        // 统计变动项目
+        statProjects(files)
         // 复制到目标文件夹
         copyFiles(files)
         // 打包
@@ -32,11 +35,11 @@ object PackUpManager {
     fun printFileList() {
         val file = File("${config.targetPath}\\readme.txt")
         file.appendText("变动文件：\r\n")
-        changedList.forEach { file.appendText("$it\r\n") }
+        changedFilesList.forEach { file.appendText("$it\r\n") }
         file.appendText("\r\n")
 
         file.appendText("打包文件：\r\n")
-        packedList.forEach { file.appendText("$it\r\n") }
+        packedFilesList.forEach { file.appendText("$it\r\n") }
 
         file.appendText("\r\n")
         file.appendText("如有properties配置文件，需另外处理")
@@ -73,17 +76,28 @@ object PackUpManager {
     }
 
     /**
+     * 统计变动项目
+     */
+    fun statProjects(files: List<File>) {
+        files.forEach {
+            val r = "LIANLIAN(\\w)+".toRegex()
+            val result = r.find(it.path)
+            result?.let { changedProjectsList.add(result.value)}
+        }
+    }
+
+    /**
      * 复制变动文件
      */
     fun copyFiles(files: List<File>) {
         files.forEach {
             println(it.path)
-            changedList.add(it.path)
+            changedFilesList.add(it.path)
             if (it.isDirectory) {
                 return@forEach
             }
             when {
-                it.path.endsWith(".java") -> copyJavaFiles(it.path, !config.isFromSvn)
+                it.path.endsWith(".java") -> copyJavaFiles(it.path)
                 it.path.endsWith(".jsp") -> copyJspFiles(it.path)
                 it.path.contains("LIANLIAN_STATIC") -> copyStaticFiles(it.path)
                 it.path.endsWith(".properties") -> null
@@ -100,7 +114,7 @@ object PackUpManager {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\src\\", "\\WEB-INF\\classes\\")
         File(path).copyTo(File(targetFilePath), true)
-        packedList.add(targetFilePath)
+        packedFilesList.add(targetFilePath)
     }
 
     /**
@@ -110,7 +124,7 @@ object PackUpManager {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot", "")
         File(path).copyTo(File(targetFilePath), true)
-        packedList.add(targetFilePath)
+        packedFilesList.add(targetFilePath)
     }
 
     /**
@@ -120,49 +134,56 @@ object PackUpManager {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot", "")
         File(path).copyTo(File(targetFilePath), true)
-        packedList.add(targetFilePath)
+        packedFilesList.add(targetFilePath)
     }
 
     /**
      * 复制java文件
      */
-    fun copyJavaFiles(path: String, getRelated: Boolean = false) {
+    fun copyJavaFiles(path: String) {
         if (!File(path).exists()) {
             println("$path 不存在")
             return
         }
 
-        // service impl
-        if (path.contains("_SERVICE")) {
+        // _SERVICE
+        if (path.contains("_SERVICE\\")) {
             var fromFilePath = path.replace("\\src\\", "\\WebRoot\\WEB-INF\\classes\\")
             fromFilePath = fromFilePath.replace(".java", ".class")
             var targetFilePath = fromFilePath.replace(config.projectPath, config.targetPath)
             targetFilePath = targetFilePath.replace("\\WebRoot", "")
             File(fromFilePath).copyTo(File(targetFilePath), true)
-            packedList.add(targetFilePath)
-
-            // IService
-            if (getRelated) {
-                copyJavaFiles(ServicePathUtils.getSuperInterface(path))
-            }
+            packedFilesList.add(targetFilePath)
 
             return
         }
 
-        // IService
-        if (path.contains("LIANLIAN_COMMON") && path.endsWith("Service.java")) {
-            // impl
-            if (getRelated) {
-                copyJavaFiles(ServicePathUtils.getServiceImpl(path))
-            }
+        // LIANLIAN_COMMON || LIANLIAN_UTILITY
+        if (path.contains("LIANLIAN_COMMON\\") || path.contains("LIANLIAN_UTILITY")) {
+            var fromFilePath = config.classPath + path.substring(path.indexOf("\\src\\") + 5)
+            fromFilePath = fromFilePath.replace(".java", ".class")
+
+            changedProjectsList
+                    .filter { it != "LIANLIAN_UTILITY" }
+                    .filter { it != "LIANLIAN_COMMON" }
+                    .filter { it != "LIANLIAN_STATIC" }
+                    .forEach {
+                        var targetFilePath = fromFilePath.replace(config.projectPath, config.targetPath)
+                        targetFilePath = targetFilePath.replace("\\WebRoot", "")
+                        targetFilePath = targetFilePath.replace(config.mainProject, it)
+                        File(fromFilePath).copyTo(File(targetFilePath), true)
+                        packedFilesList.add(targetFilePath)
+                    }
+
+            return
         }
 
-        var fromFilePath = config.classPath + path.substring(path.indexOf("\\src\\") + 4)
+        var fromFilePath = config.classPath + path.substring(path.indexOf("\\src\\") + 5)
         fromFilePath = fromFilePath.replace(".java", ".class")
         var targetFilePath = fromFilePath.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot", "")
         File(fromFilePath).copyTo(File(targetFilePath), true)
-        packedList.add(targetFilePath)
+        packedFilesList.add(targetFilePath)
     }
 
     /**
