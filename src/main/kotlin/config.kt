@@ -8,7 +8,7 @@ val config = configBuilder {
     // 项目路径
     projectPath = "E:\\workspace"
     // 主项目
-    mainProject = "LIANLIAN_MNG"
+    mainProject = "LIANLIAN_CARD_SERVICE"
     // 主项目java文件编译路径
     classPath = "$projectPath\\$mainProject\\WebRoot\\WEB-INF\\classes\\"
 
@@ -28,13 +28,18 @@ val config = configBuilder {
 
     // svn 版本号
 
-    svn("http://192.168.1.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/LIANLIAN_MNG/") {
-        add(36439)
-        add(36455)
+
+    svn("http://192.168.1.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/LIANLIAN_CARD_SERVICE/") {
+        add(36686)
+        add(36736)
+        add(36737)
+        add(36741)
+        add(36806)
+        add(36810)
+        add(36815)
+        add(36816)
+        add(36817)
     }
 
-    svn("http://192.168.1.13/svn/LIANLIAN_WXSCHOOL/trunk/LIANLIAN_WXSCHOOL_SERVICE/") {
-        add(4589)
-    }
 
 }

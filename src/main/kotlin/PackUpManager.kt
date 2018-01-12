@@ -9,8 +9,8 @@ import java.util.*
 object PackUpManager {
     val sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     val changedProjectsList = hashSetOf<String>()
-    val changedFilesList = mutableListOf<String>()
-    val packedFilesList = mutableListOf<String>()
+    val changedFilesList = hashSetOf<String>()
+    val packedFilesList = hashSetOf<String>()
 
 
     // 入口
@@ -113,8 +113,13 @@ object PackUpManager {
     fun copyXmlFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\src\\", "\\WEB-INF\\classes\\")
-        File(path).copyTo(File(targetFilePath), true)
-        packedFilesList.add(targetFilePath)
+
+        if (File(path).exists()) {
+            File(path).copyTo(File(targetFilePath), true)
+            packedFilesList.add(targetFilePath)
+        } else {
+            println("$path 未找到")
+        }
     }
 
     /**
@@ -123,8 +128,13 @@ object PackUpManager {
     fun copyStaticFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot", "")
-        File(path).copyTo(File(targetFilePath), true)
-        packedFilesList.add(targetFilePath)
+
+        if (File(path).exists()) {
+            File(path).copyTo(File(targetFilePath), true)
+            packedFilesList.add(targetFilePath)
+        } else {
+            println("$path 未找到")
+        }
     }
 
     /**
@@ -133,8 +143,13 @@ object PackUpManager {
     fun copyJspFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot", "")
-        File(path).copyTo(File(targetFilePath), true)
-        packedFilesList.add(targetFilePath)
+
+        if (File(path).exists()) {
+            File(path).copyTo(File(targetFilePath), true)
+            packedFilesList.add(targetFilePath)
+        } else {
+            println("$path 未找到")
+        }
     }
 
     /**
@@ -152,8 +167,13 @@ object PackUpManager {
             fromFilePath = fromFilePath.replace(".java", ".class")
             var targetFilePath = fromFilePath.replace(config.projectPath, config.targetPath)
             targetFilePath = targetFilePath.replace("\\WebRoot", "")
-            File(fromFilePath).copyTo(File(targetFilePath), true)
-            packedFilesList.add(targetFilePath)
+
+            if (File(fromFilePath).exists()) {
+                File(fromFilePath).copyTo(File(targetFilePath), true)
+                packedFilesList.add(targetFilePath)
+            } else {
+                println("$fromFilePath 未找到")
+            }
 
             return
         }
@@ -182,8 +202,13 @@ object PackUpManager {
         fromFilePath = fromFilePath.replace(".java", ".class")
         var targetFilePath = fromFilePath.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("\\WebRoot", "")
-        File(fromFilePath).copyTo(File(targetFilePath), true)
-        packedFilesList.add(targetFilePath)
+
+        if (File(fromFilePath).exists()) {
+            File(fromFilePath).copyTo(File(targetFilePath), true)
+            packedFilesList.add(targetFilePath)
+        } else {
+            println("$fromFilePath 未找到")
+        }
     }
 
     /**
