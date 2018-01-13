@@ -16,18 +16,43 @@ object PackUpManager {
         // 删除目标文件夹
         clearTargetPath()
 
-        // 复制变动文件
+        // 获取变动文件
         context.getAllChangedFiles()
 
         // 复制变动文件
         context.copyAllChangedFiles()
 
-//        // 打包
-//        packup(config.targetPath)
+        // 打包
+        copyCommonFiles()
+        packup()
 
         // 核对清单
         printChangedFiles()
         printCopiedFiles()
+    }
+
+    fun copyCommonFiles() {
+        val fromFolder = hashSetOf<String>()
+        val toFolder = hashSetOf<String>()
+        File(config.targetPath).listFiles()
+                .filter { it.isDirectory }
+                .filter { it.name.endsWith("_COMMON") || it.name.endsWith("_UTILITY") }
+                .forEach { fromFolder.add(it.name) }
+
+        File(config.targetPath).listFiles()
+                .filter { it.isDirectory }
+                .filter { !it.name.endsWith("_COMMON") && !it.name.endsWith("_UTILITY") && !it.name.endsWith("_STATIC") }
+                .forEach { toFolder.add(it.name) }
+
+        fromFolder.forEach { f ->
+            File("${config.targetPath}\\$f").walk().maxDepth(Int.MAX_VALUE)
+                    .filter { it.isFile }
+                    .forEach { p ->
+                        toFolder.forEach { t ->
+                            p.copyTo(File(p.path.replace(f, t)), true)
+                        }
+                    }
+        }
     }
 
     /**
@@ -64,18 +89,21 @@ object PackUpManager {
      * 打包
      * pack up zip
      */
-    fun packup(targetPath: String) {
+    fun packup() {
+        val root = File(config.targetPath).name
         val rt = Runtime.getRuntime()
-        File(targetPath).walk().maxDepth(1)
+        File(config.targetPath).walk().maxDepth(1)
                 .filter { it.isDirectory }
-                .filter { it.name != "output" }
+                .filter { it.name != root }
+                .filter { !it.name.endsWith("_COMMON") && !it.name.endsWith("_UTILITY")}
                 .forEach { it.renameTo(File("$it.war")) }
 
-        File(targetPath).walk().maxDepth(1)
+        File(config.targetPath).walk().maxDepth(1)
                 .filter { it.isDirectory }
-                .filter { it.name != "output" }
+                .filter { it.name != root }
+                .filter { it.name.endsWith(".war") }
                 .forEach {
-                    rt.exec("cmd /C cd /D $targetPath && jar cfM ${it.name}.zip ${it.name}/")
+                    rt.exec("cmd /C cd /D ${config.targetPath} && jar cfM ${it.name}.zip ${it.name}/")
                 }
     }
 

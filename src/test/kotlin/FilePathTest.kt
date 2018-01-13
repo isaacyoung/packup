@@ -1,6 +1,6 @@
-import de.regnis.q.sequence.core.QSequenceAssert.assertTrue
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
+import java.io.File
 
 /**
  *
@@ -16,5 +16,15 @@ object FilePathTest : Spek({
             println(re)
         }
 
+    }
+
+    it("last folder") {
+        val s = "E:\\output"
+        println(File(s).name)
+    }
+
+    it("pack up zip") {
+        val rt = Runtime.getRuntime()
+        rt.exec("cmd /C cd /D E:\\output && jar cfM LIANLIAN_WXSCHOOL_LOGISTICS_SERVICE.war.zip LIANLIAN_WXSCHOOL_LOGISTICS_SERVICE.war/")
     }
 })

@@ -23,7 +23,7 @@ val config = configBuilder {
     isFromSvn = false
 
     // 获取修改时间之后的变动文件
-    fromDate = "2018-01-12 16:30:00"
+    fromDate = "2018-01-11 16:30:00"
 
     // svn账号
     svnUser = "yangzh"

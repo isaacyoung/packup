@@ -84,7 +84,8 @@ class IdeaCompiler {
         var fromFilePath = fromTargetPath + "\\" + getProjectName(path) + path.substring(path.indexOf("\\src\\") + 4)
         fromFilePath = fromFilePath.replace(".java", ".class")
         var targetFilePath = fromFilePath.replace(fromTargetPath, config.targetPath)
-        targetFilePath = targetFilePath.replace("\\WebRoot", "")
+        val projectName = getProjectName(targetFilePath)
+        targetFilePath = targetFilePath.replace(projectName, "$projectName\\WEB-INF\\classes")
 
         if (File(fromFilePath).exists()) {
             File(fromFilePath).copyTo(File(targetFilePath), true)
@@ -94,16 +95,4 @@ class IdeaCompiler {
         }
     }
 
-    /**
-     * 从路径中获取项目名称
-     */
-    fun getProjectName(path: String): String {
-        val r = "[/|\\\\]([LIANLIAN|JIEKA](\\w)+)[/|\\\\]".toRegex()
-        val result = r.find(path)
-        var s = ""
-        result?.let {
-            s = result.value.replace("/","").replace("\\","")
-        }
-        return s
-    }
 }

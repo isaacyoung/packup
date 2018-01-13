@@ -1,7 +1,6 @@
 package cn.isaac.context
 
 import cn.isaac.config.config
-import java.io.File
 
 /**
  *
@@ -10,8 +9,6 @@ import java.io.File
 
 class ContextBuild {
 
-    // 变动项目
-    val changedProjectsList = hashSetOf<String>()
     // 变动文件
     val changedFilesList = hashSetOf<String>()
     // 复制文件
@@ -34,17 +31,19 @@ class ContextBuild {
         }
     }
 
-    /**
-     * 统计变动项目
-     */
-    fun statProjects(files: List<File>) {
-        files.forEach {
-            val r = "LIANLIAN(\\w)+".toRegex()
-            val result = r.find(it.path)
-            result?.let { changedProjectsList.add(result.value)}
-        }
-    }
+}
 
+/**
+ * 从路径中获取项目名称
+ */
+fun getProjectName(path: String): String {
+    val r = "[/|\\\\]([LIANLIAN|JIEKA](\\w)+)[/|\\\\]".toRegex()
+    val result = r.find(path)
+    var s = ""
+    result?.let {
+        s = result.value.replace("/","").replace("\\","")
+    }
+    return s
 }
 
 val context = ContextBuild()
