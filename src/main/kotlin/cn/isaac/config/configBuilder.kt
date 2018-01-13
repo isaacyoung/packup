@@ -1,3 +1,5 @@
+package cn.isaac.config
+
 /**
  *
  * create by isaac at 2017/12/23 11:22
@@ -15,10 +17,10 @@ fun configBuilder(init: Config.() -> Unit): Config {
     return config
 }
 
-class Config : Tag("config") {
+class Config : Tag("cn.isaac.config.getConfig") {
     lateinit var projectPath: String
     lateinit var mainProject: String
-    lateinit var classPath: String
+    lateinit var ide: String
     lateinit var targetPath: String
     lateinit var fromDate: String
     var isFromSvn = true // svn || modifed file

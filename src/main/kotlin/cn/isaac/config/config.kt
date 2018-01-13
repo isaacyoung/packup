@@ -1,3 +1,5 @@
+package cn.isaac.config
+
 /**
  * 配置文件
  * create by isaac at 2017/12/23 11:21
@@ -6,20 +8,22 @@
 val config = configBuilder {
 
     // 项目路径
-    projectPath = "E:\\workspace"
+    projectPath = "E:\\zhhq"
+
+    // eclipse or idea
+    ide = "idea"
+
     // 主项目
-    mainProject = "LIANLIAN_CARD_SERVICE"
-    // 主项目java文件编译路径
-    classPath = "$projectPath\\$mainProject\\WebRoot\\WEB-INF\\classes\\"
+    mainProject = "LIANLIAN_WXSCHOOL_LOGISTICS"
 
     // 输出路径
     targetPath = "E:\\output"
 
     // 是否根据svn版本号获取。false：根据文件修改时间获取
-    isFromSvn = true
+    isFromSvn = false
 
     // 获取修改时间之后的变动文件
-    fromDate = "2017-12-22 16:30:00"
+    fromDate = "2018-01-12 16:30:00"
 
     // svn账号
     svnUser = "yangzh"

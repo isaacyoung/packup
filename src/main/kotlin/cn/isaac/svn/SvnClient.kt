@@ -1,8 +1,11 @@
+package cn.isaac.svn
+
+import cn.isaac.config.config
+import cn.isaac.context.substringSvnPath
 import org.tmatesoft.svn.core.SVNURL
 import org.tmatesoft.svn.core.wc.SVNClientManager
 import org.tmatesoft.svn.core.wc.SVNRevision
 import org.tmatesoft.svn.core.wc.SVNWCUtil
-import java.io.File
 
 /**
  * svn客户端
@@ -10,8 +13,8 @@ import java.io.File
  */
 object SvnClient {
 
-    fun getFilesByRevision(): List<File> {
-        val result = arrayListOf<File>()
+    fun getFilesByRevision(): List<String> {
+        val result = arrayListOf<String>()
         val options = SVNWCUtil.createDefaultOptions(true)
         val clientManager = SVNClientManager.newInstance(options, config.svnUser, config.svnPassword)
         config.svnList.forEach {
@@ -28,7 +31,7 @@ object SvnClient {
                         if (path.endsWith(")")) {
                             path = path.substring(0,path.indexOf("("))
                         }
-                        result.add(File(config.projectPath + path.substring(path.lastIndexOf("/LIANLIAN_"))))
+                        result.add(config.projectPath + substringSvnPath(path))
                     }
 
                 }
