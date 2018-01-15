@@ -45,7 +45,7 @@ object PackUpManager {
                 .forEach { toFolder.add(it.name) }
 
         fromFolder.forEach { f ->
-            File("${config.targetPath}\\$f").walk().maxDepth(Int.MAX_VALUE)
+            File("${config.targetPath}/$f").walk().maxDepth(Int.MAX_VALUE)
                     .filter { it.isFile }
                     .forEach { p ->
                         toFolder.forEach { t ->
@@ -60,7 +60,7 @@ object PackUpManager {
      */
     fun printChangedFiles() {
         createTargetPath()
-        val file = File("${config.targetPath}\\changed.txt")
+        val file = File("${config.targetPath}/changed.txt")
         file.appendText("变动文件：\r\n")
         context.changedFilesList.sorted().forEach { file.appendText("$it\r\n") }
         file.appendText("\r\n")
@@ -80,7 +80,7 @@ object PackUpManager {
      * 核对清单
      */
     fun printCopiedFiles() {
-        val file = File("${config.targetPath}\\packed.txt")
+        val file = File("${config.targetPath}/packed.txt")
         file.appendText("复制文件：\r\n")
         context.packedFilesList.sorted().forEach { file.appendText("$it\r\n") }
     }

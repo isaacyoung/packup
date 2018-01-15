@@ -37,7 +37,7 @@ class ContextBuild {
  * 从路径中获取项目名称
  */
 fun getProjectName(path: String): String {
-    val r = "[/|\\\\]([LIANLIAN|JIEKA](\\w)+)[/|\\\\]".toRegex()
+    val r = "[/|\\\\]([LIANLIAN_CARD|LIANLIAN|JIEKA|CARD](\\w)+)[/|\\\\]".toRegex()
     val result = r.find(path)
     var s = ""
     result?.let {

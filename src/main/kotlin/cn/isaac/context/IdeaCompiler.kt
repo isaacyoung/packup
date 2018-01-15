@@ -31,7 +31,8 @@ class IdeaCompiler {
      */
     fun copyXmlFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
-        targetFilePath = targetFilePath.replace("\\src\\", "\\WEB-INF\\classes\\")
+        targetFilePath = targetFilePath.replace("/src/", "/WEB-INF/classes/")
+        targetFilePath = targetFilePath.replace("/WebRoot", "")
 
         if (File(path).exists()) {
             File(path).copyTo(File(targetFilePath), true)
@@ -46,7 +47,7 @@ class IdeaCompiler {
      */
     fun copyStaticFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
-        targetFilePath = targetFilePath.replace("\\WebRoot", "")
+        targetFilePath = targetFilePath.replace("/WebRoot", "")
 
         if (File(path).exists()) {
             File(path).copyTo(File(targetFilePath), true)
@@ -61,7 +62,7 @@ class IdeaCompiler {
      */
     fun copyJspFiles(path: String) {
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
-        targetFilePath = targetFilePath.replace("\\WebRoot", "")
+        targetFilePath = targetFilePath.replace("/WebRoot", "")
 
         if (File(path).exists()) {
             File(path).copyTo(File(targetFilePath), true)
@@ -80,12 +81,16 @@ class IdeaCompiler {
             return
         }
 
-        val fromTargetPath = config.projectPath + "\\" + config.mainProject + "\\out\\production"
-        var fromFilePath = fromTargetPath + "\\" + getProjectName(path) + path.substring(path.indexOf("\\src\\") + 4)
+        if (path.contains("Test.")) {
+            println()
+        }
+
+        val fromTargetPath = config.projectPath + "/" + config.mainProject + "/out/production"
+        var fromFilePath = fromTargetPath + "/" + getProjectName(path) + path.substring(path.indexOf("/src/") + 4)
         fromFilePath = fromFilePath.replace(".java", ".class")
         var targetFilePath = fromFilePath.replace(fromTargetPath, config.targetPath)
         val projectName = getProjectName(targetFilePath)
-        targetFilePath = targetFilePath.replace(projectName, "$projectName\\WEB-INF\\classes")
+        targetFilePath = targetFilePath.replace(projectName, "$projectName/WEB-INF/classes")
 
         if (File(fromFilePath).exists()) {
             File(fromFilePath).copyTo(File(targetFilePath), true)

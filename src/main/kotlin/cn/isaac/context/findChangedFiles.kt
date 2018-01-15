@@ -48,15 +48,15 @@ fun getSvnFiles(): List<String> {
 fun notContainPath(path: String): Boolean {
     return !path.contains(".metadata")
             && !path.contains(".svn")
-            && !path.contains("\\classes\\")
+            && !path.contains("/classes/")
 }
 
 /**
  * 包含目录
  */
 fun containPath(path: String): Boolean {
-    return path.contains("\\src\\")
-            || path.contains("\\WebRoot\\")
+    return path.contains("/src/")
+            || path.contains("/WebRoot/")
 }
 
 /**
@@ -64,8 +64,10 @@ fun containPath(path: String): Boolean {
  */
 fun substringSvnPath(path: String): String {
     return when {
-        path.contains("/LIANLIAN") -> path.substring(path.lastIndexOf("/LIANLIAN_"))
-        else -> path.substring(path.lastIndexOf("/JIEKA_"))
+        path.contains("/LIANLIAN_CARD_") -> path.substring(path.lastIndexOf("/LIANLIAN_CARD_"))
+        path.contains("/CARD_") -> path.substring(path.lastIndexOf("/CARD_"))
+        path.contains("/JIEKA_") -> path.substring(path.lastIndexOf("/JIEKA_"))
+        else -> path.substring(path.lastIndexOf("/LIANLIAN_"))
     }
 }
 

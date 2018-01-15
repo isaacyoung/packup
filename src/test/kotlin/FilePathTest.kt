@@ -8,8 +8,8 @@ import java.io.File
  */
 object FilePathTest : Spek({
     it("project name") {
-        val s = "E:\\zhhq\\LIANLIAN_WXSCHOOL_LOGISTICS\\out\\production"
-        val r = "[/|\\\\]([LIANLIAN|JIEKA](\\w)+)[/|\\\\]".toRegex()
+        val s = "E:\\zhhq/LIANLIAN_CARD_LOGISTICS/out\\production"
+        val r = "[/|\\\\]([LIANLIAN_CARD|LIANLIAN|JIEKA](\\w)+)[/|\\\\]".toRegex()
         val result = r.find(s)
         result?.let {
             val re = result.value.replace("/","").replace("\\","")
