@@ -83,12 +83,16 @@ class EclipseCompiler {
 
         val projectName = getProjectName(path)
         var fromFilePath = when {
-            projectName.endsWith("_COMMON") || projectName.endsWith("_UTILITY") -> path.replace(projectName,projectName+"/bin")
-            else -> path.replace(projectName,projectName+"/WebRoot/WEB-INF/classes")
+            projectName.endsWith("_COMMON") || projectName.endsWith("_UTILITY") -> path.replace(projectName+"/src",projectName+"/bin")
+            else -> path.replace(projectName+"/src",projectName+"/WebRoot/WEB-INF/classes")
         }
         fromFilePath = fromFilePath.replace(".java", ".class")
         var targetFilePath = fromFilePath.replace(config.projectPath, config.targetPath)
-        targetFilePath = targetFilePath.replace("/WebRoot", "")
+        if (projectName.endsWith("_COMMON") || projectName.endsWith("_UTILITY")) {
+            targetFilePath = targetFilePath.replace(projectName + "/bin", projectName + "/WEB-INF/classes")
+        } else {
+            targetFilePath = targetFilePath.replace("/WebRoot", "")
+        }
 
         if (File(fromFilePath).exists()) {
             File(fromFilePath).copyTo(File(targetFilePath), true)
