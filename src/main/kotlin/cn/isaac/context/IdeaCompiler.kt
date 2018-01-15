@@ -81,10 +81,6 @@ class IdeaCompiler {
             return
         }
 
-        if (path.contains("Test.")) {
-            println()
-        }
-
         val fromTargetPath = config.projectPath + "/" + config.mainProject + "/out/production"
         var fromFilePath = fromTargetPath + "/" + getProjectName(path) + path.substring(path.indexOf("/src/") + 4)
         fromFilePath = fromFilePath.replace(".java", ".class")

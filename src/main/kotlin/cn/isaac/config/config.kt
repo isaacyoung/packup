@@ -11,7 +11,7 @@ val config = configBuilder {
     projectPath = "E:/workspace"
 
     // eclipse or idea
-    ide = "idea"
+    ide = "eclipse"
 
     // 主项目
     mainProject = "LIANLIAN_MNG"
