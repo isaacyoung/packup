@@ -13,7 +13,7 @@ val config = configBuilder {
     // eclipse or idea
     ide = "eclipse"
 
-    // 主项目
+    // 主项目 ide=idea有效
     mainProject = "LIANLIAN_MNG"
 
     // 输出路径
