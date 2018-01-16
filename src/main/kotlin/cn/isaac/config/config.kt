@@ -12,7 +12,7 @@ val config = configBuilder {
 
     // 编译环境 eclipse or idea
     // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
-    ide = "eclipse"
+    ide = "idea"
 
     // 主项目 ide=idea有效
     mainProject = "LIANLIAN_MNG"
@@ -66,6 +66,12 @@ val config = configBuilder {
         add(36826)
         add(36831)
         add(36835)
+        add(36864)
+        add(36872)
+        add(36873)
+        add(36882)
+        add(36887)
+        add(36888)
     }
 
 
