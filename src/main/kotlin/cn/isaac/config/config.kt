@@ -10,7 +10,8 @@ val config = configBuilder {
     // 项目路径
     projectPath = "E:/workspace"
 
-    // eclipse or idea
+    // 编译环境 eclipse or idea
+    // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
     ide = "eclipse"
 
     // 主项目 ide=idea有效
@@ -31,7 +32,6 @@ val config = configBuilder {
 
 
     // svn 版本号
-
 
     svn("http://192.168.1.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/") {
         add(36682)
