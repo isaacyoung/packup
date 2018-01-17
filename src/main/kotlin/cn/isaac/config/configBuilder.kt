@@ -46,4 +46,8 @@ class Svn : Tag("svn") {
         revisionList.add(value)
     }
 
+    fun between(begin: Int, end: Int) {
+        revisionList += begin..end
+    }
+
 }
