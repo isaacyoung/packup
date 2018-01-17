@@ -46,6 +46,9 @@ class IdeaCompiler {
      * 复制静态文件
      */
     fun copyStaticFiles(path: String) {
+        if (File(path).isDirectory) {
+            return
+        }
         var targetFilePath = path.replace(config.projectPath, config.targetPath)
         targetFilePath = targetFilePath.replace("/WebRoot", "")
 
