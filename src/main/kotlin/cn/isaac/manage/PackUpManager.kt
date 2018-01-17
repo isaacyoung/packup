@@ -29,8 +29,12 @@ object PackUpManager {
         // 核对清单
         printChangedFiles()
         printCopiedFiles()
+        printUnCopiedFiles()
     }
 
+    /**
+     * 项目依赖
+     */
     fun copyCommonFiles() {
         val fromFolder = hashSetOf<String>()
         val toFolder = hashSetOf<String>()
@@ -56,17 +60,6 @@ object PackUpManager {
     }
 
     /**
-     * 打印变动文件
-     */
-    fun printChangedFiles() {
-        createTargetPath()
-        val file = File("${config.targetPath}/changed.txt")
-        file.appendText("变动文件：\r\n")
-        context.changedFilesList.sorted().forEach { file.appendText("$it\r\n") }
-        file.appendText("\r\n")
-    }
-
-    /**
      * 创建目标文件夹
      */
     fun createTargetPath() {
@@ -76,14 +69,6 @@ object PackUpManager {
         }
     }
 
-    /**
-     * 核对清单
-     */
-    fun printCopiedFiles() {
-        val file = File("${config.targetPath}/packed.txt")
-        file.appendText("复制文件：\r\n")
-        context.packedFilesList.sorted().forEach { file.appendText("$it\r\n") }
-    }
 
     /**
      * 打包
