@@ -1,0 +1,61 @@
+package cn.isaac.tools
+
+import java.io.File
+import java.util.zip.ZipFile
+
+/**
+ * zip包对比
+ * create by isaac at 2018/1/17 10:18
+ */
+
+class Diff(oldFile: String, newFile: String) {
+    private val newZipFiles = hashSetOf<String>()
+    private val oldZipFiles = hashSetOf<String>()
+    private val newDiffFiles = hashSetOf<String>()
+    private val oldDiffFiles = hashSetOf<String>()
+    private var oldZip: ZipFile = ZipFile(File(oldFile))
+    private var newZip: ZipFile = ZipFile(File(newFile))
+
+    init {
+        newZip.stream().forEach {
+            newZipFiles.add(it.name)
+        }
+
+        oldZip.stream().forEach {
+            oldZipFiles.add(it.name)
+        }
+    }
+
+    fun run() {
+
+        newZipFiles.forEach {
+            if (!oldZipFiles.contains(it)) {
+                newDiffFiles.add(it)
+            }
+        }
+
+        oldZipFiles.forEach {
+            if (!newZipFiles.contains(it)) {
+                oldDiffFiles.add(it)
+            }
+        }
+
+        if (newDiffFiles.size > 0) {
+            println("----------------- 新增 ----------------------")
+            newDiffFiles.forEach { println(it) }
+        }
+        if (oldDiffFiles.size > 0) {
+            println("----------------- 减少 ----------------------")
+            oldDiffFiles.forEach { println(it) }
+        }
+    }
+}
+
+fun main(args: Array<String>) {
+    val oldFile = "E:\\output\\LIANLIAN_STATIC.war.zip"
+    val newFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\智慧后勤\\LIANLIAN_STATIC.war.zip"
+
+    val diff = Diff(oldFile,newFile)
+    diff.run()
+
+}
