@@ -52,8 +52,8 @@ class Diff(oldFile: String, newFile: String) {
 }
 
 fun main(args: Array<String>) {
-    val oldFile = "E:\\output\\LIANLIAN_STATIC.war.zip"
-    val newFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\智慧后勤\\LIANLIAN_STATIC.war.zip"
+    val oldFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\智慧后勤\\LIANLIAN_STATIC.war.zip"
+    val newFile = "E:\\output\\LIANLIAN_STATIC.war.zip"
 
     val diff = Diff(oldFile,newFile)
     diff.run()
