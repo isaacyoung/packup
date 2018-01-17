@@ -42,11 +42,11 @@ class Diff(oldFile: String, newFile: String) {
 
         if (newDiffFiles.size > 0) {
             println("----------------- 新增 ----------------------")
-            newDiffFiles.forEach { println(it) }
+            newDiffFiles.sorted().forEach { println(it) }
         }
         if (oldDiffFiles.size > 0) {
             println("----------------- 减少 ----------------------")
-            oldDiffFiles.forEach { println(it) }
+            oldDiffFiles.sorted().forEach { println(it) }
         }
     }
 }
