@@ -52,8 +52,8 @@ class Diff(oldFile: String, newFile: String) {
 }
 
 fun main(args: Array<String>) {
+    val project = "LIANLIAN_INTERFACE"
 //    val project = "LIANLIAN_CARD_SERVICE"
-    val project = "LIANLIAN_CARD_SERVICE"
     val oldFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\智慧后勤\\$project.war.zip"
     val newFile = "E:\\output\\$project.war.zip"
 
