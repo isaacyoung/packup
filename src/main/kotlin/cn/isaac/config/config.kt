@@ -67,6 +67,15 @@ val config = configBuilder {
         add(36938)
         between(36940,36942)
         add(36947)
+        add(36980)
+        add(36981)
+        add(36985)
+        add(36986)
+        add(36990)
+        add(36991)
+        add(36996)
+        add(37006)
+        add(37008)
     }
 
     svn("http://192.168.1.13/svn/logistics/source/trunk/LIANLIAN_LOGISTICS_COMMON/") {
@@ -91,6 +100,15 @@ val config = configBuilder {
         add(449)
         add(503)
         between(515,516)
+        add(542)
+        add(546)
+        add(564)
+        add(592)
+        add(611)
+        add(622)
+        add(651)
+        add(653)
+        add(671)
     }
 
     // new wxschool

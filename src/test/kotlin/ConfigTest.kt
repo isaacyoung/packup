@@ -16,4 +16,13 @@ object ConfigTest : Spek({
             it.revisionList.forEach {println(it)}
         }
     }
+
+    it("between") {
+        val revisionList = arrayListOf<Int>()
+        fun between(begin: Int, end: Int) {
+            revisionList += begin..end
+        }
+        between(1,5)
+        revisionList.forEach { print(it) }
+    }
 })
