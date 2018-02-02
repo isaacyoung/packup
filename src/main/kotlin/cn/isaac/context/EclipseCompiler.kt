@@ -21,7 +21,7 @@ class EclipseCompiler {
                 it.contains("LIANLIAN_STATIC") -> copyStaticFiles(it)
                 it.endsWith(".properties") -> null
                 it.endsWith(".xml") -> copyXmlFiles(it)
-                else -> if (File(it).exists()  && File(it).isFile) File(it).copyTo(File(it.replace(config.projectPath, config.targetPath)), true)
+                else -> if (File(it).exists()  && File(it).isFile) File(it).copyTo(File(it.replace(config.projectPath, config.targetPath).replace("/WebRoot", "")), true)
             }
         }
     }
