@@ -9,14 +9,14 @@ fun main(args: Array<String>) {
     config = configBuilder {
 
         // 项目路径
-        projectPath = "E:/wxqy"
+        projectPath = "E:/zhhq"
 
         // 编译环境 eclipse or idea
         // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
         ide = "idea"
 
         // 主项目 ide=idea有效
-        mainProject = "LIANLIAN_WXQY"
+        mainProject = "LIANLIAN_STATIC"
 
         // 输出路径
         targetPath = "E:/output"
@@ -31,13 +31,11 @@ fun main(args: Array<String>) {
         svnUser = "yangzh"
         svnPassword = "123456"
 
-        // common
-        svn("http://192.168.1.13/svn/logistics/source/trunk/LIANLIAN_LOGISTICS_COMMON/") {
-            between(151,882)
-        }
-
-        svn("http://192.168.1.13/svn/LIANLIAN_WXSCHOOL/trunk/") {
-            between(4618,4695)
+        svn("http://192.168.1.13/svn/logistics/source/trunk/LIANLIAN_STATIC/") {
+            add(151)
+            between(153,154)
+            between(157,160)
+            between(171,968)
         }
 
     }
@@ -46,15 +44,15 @@ fun main(args: Array<String>) {
 
 
     fun diff() {
-        val project = "LIANLIAN_WXQY_SERVICE"
-        val oldFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180129萧山机场后勤服务\\$project.war.zip"
+        val project = "LIANLIAN_STATIC"
+        val oldFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\智慧后勤\\$project.war.zip"
         val newFile = "E:\\output\\$project.war.zip"
 
         val diff = Diff(oldFile,newFile)
         diff.run()
     }
-
     diff()
+
 
 }
 
