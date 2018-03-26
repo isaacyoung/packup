@@ -33,11 +33,11 @@ fun main(args: Array<String>) {
 
         // common
         svn("http://192.168.1.13/svn/logistics/source/trunk/LIANLIAN_LOGISTICS_COMMON/") {
-            between(151,882)
+            between(1139,1161)
         }
 
         svn("http://192.168.1.13/svn/LIANLIAN_WXSCHOOL/trunk/") {
-            between(4618,4695)
+            between(4634,4705)
         }
 
     }
@@ -46,8 +46,8 @@ fun main(args: Array<String>) {
 
 
     fun diff() {
-        val project = "LIANLIAN_WXQY_SERVICE"
-        val oldFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180129萧山机场后勤服务\\$project.war.zip"
+        val project = "LIANLIAN_STATIC"
+        val oldFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\企业微信后台二级宫格\\$project.war.zip"
         val newFile = "E:\\output\\$project.war.zip"
 
         val diff = Diff(oldFile,newFile)
