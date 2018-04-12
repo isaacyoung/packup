@@ -32,7 +32,7 @@ fun getModifiedFiles() = File(config.projectPath).walk().maxDepth(Int.MAX_VALUE)
         .filter { containPath(it.path) }
         .filter { it.isFile }
         .filter { it.lastModified() >= getDate(config.fromDate) }
-        .map { it.path }
+        .map { it.path.replace("\\","/") }
         .toList()
 
 /**
@@ -46,17 +46,19 @@ fun getSvnFiles(): List<String> {
  * 不包含目录
  */
 fun notContainPath(path: String): Boolean {
-    return !path.contains(".metadata")
-            && !path.contains(".svn")
-            && !path.contains("/classes/")
+    val temp = path.replace("\\","/")
+    return !temp.contains(".metadata")
+            && !temp.contains(".svn")
+            && !temp.contains("/classes/")
 }
 
 /**
  * 包含目录
  */
 fun containPath(path: String): Boolean {
-    return path.contains("/src/")
-            || path.contains("/WebRoot/")
+    val temp = path.replace("\\","/")
+    return temp.contains("/src/")
+            || temp.contains("/WebRoot/")
 }
 
 /**
