@@ -32,9 +32,7 @@ fun main(args: Array<String>) {
         svnPassword = "123456"
 
         svn("http://192.168.72.13/svn/logistics/source/trunk/") {
-            add(1389)
-            add(1423)
-            add(1461)
+            add(1470)
         }
 
     }
