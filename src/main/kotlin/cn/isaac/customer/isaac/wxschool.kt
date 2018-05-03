@@ -9,14 +9,14 @@ fun main(args: Array<String>) {
     config = configBuilder {
 
         // 项目路径
-        projectPath = "E:\\yunma\\zhhq"
+        projectPath = "E:\\yunma\\wxschool"
 
         // 编译环境 eclipse or idea
         // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
         ide = "idea"
 
         // 主项目 ide=idea有效
-        mainProject = "LIANLIAN_WXSCHOOL_LOGISTICS"
+        mainProject = "LIANLIAN_WXSCHOOL"
 
         // 输出路径
         targetPath = "F:/output"
@@ -31,15 +31,12 @@ fun main(args: Array<String>) {
         svnUser = "yangzh"
         svnPassword = "123456"
 
-        svn("http://192.168.72.13/svn/logistics/source/trunk/") {
-            add(1418)
-            add(1419)
-            add(1424)
-            add(1425)
-            add(1427)
-            add(1428)
-            between(1450,1455)
-            between(1471,1476)
+        svn("http://192.168.72.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/") {
+            add(38059)
+        }
+
+        svn("http://192.168.72.13/svn/LIANLIAN_WXSCHOOL/trunk/") {
+            add(4737)
         }
 
     }
@@ -48,7 +45,7 @@ fun main(args: Array<String>) {
 
 
     fun diff() {
-        val project = "LIANLIAN_MNG_LOGISTICS"
+        val project = "LIANLIAN_WXSCHOOL"
         val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180427统一支付收银台\\$project.war.zip"
         val newFile = "F:\\output\\$project.war.zip"
 
