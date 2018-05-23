@@ -69,6 +69,7 @@ fun substringSvnPath(path: String): String {
         path.contains("/LIANLIAN_CARD_") -> path.substring(path.lastIndexOf("/LIANLIAN_CARD_"))
         path.contains("/CARD_") -> path.substring(path.lastIndexOf("/CARD_"))
         path.contains("/JIEKA_") -> path.substring(path.lastIndexOf("/JIEKA_"))
+        path.contains("/YUNMA") -> path.substring(path.lastIndexOf("/YUNMA_"))
         else -> path.substring(path.lastIndexOf("/LIANLIAN_"))
     }
 }
