@@ -32,8 +32,10 @@ fun main(args: Array<String>) {
         svnPassword = "123456"
 
         svn("http://192.168.72.13/svn/logistics/source/trunk/") {
-            add(1469)
-            add(1480)
+            add(1528)
+            between(1530,1532)
+            between(1535,1538)
+            between(1543,1551)
         }
 
     }
@@ -42,8 +44,8 @@ fun main(args: Array<String>) {
 
 
     fun diff() {
-        val project = "LIANLIAN_MNG_LOGISTICS"
-        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180427统一支付收银台\\$project.war.zip"
+        val project = "LIANLIAN_WXSCHOOL_LOGISTICS_SERVICE"
+        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180420广告点击统计\\$project.war.zip"
         val newFile = "F:\\output\\$project.war.zip"
 
         val diff = Diff(oldFile,newFile)
