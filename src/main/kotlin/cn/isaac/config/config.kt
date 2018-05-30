@@ -27,7 +27,7 @@ var config = configBuilder {
     targetPath = "E:/output"
 
     // 是否根据svn版本号获取。false：根据文件修改时间获取
-    isFromSvn = true
+    versionControl = "svn"
 
     // 获取修改时间之后的变动文件
     fromDate = "2018-01-11 16:30:00"

@@ -9,14 +9,14 @@ fun main(args: Array<String>) {
     config = configBuilder {
 
         // 项目路径
-        projectPath = "E:/yunma/cardmng"
+        projectPath = "E:\\yunma\\unified"
 
         // 编译环境 eclipse or idea
         // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
         ide = "idea"
 
         // 主项目 ide=idea有效
-        mainProject = "LIANLIAN_CARD_MNG"
+        mainProject = "JIEKA_UNIFIED"
 
         // 输出路径
         targetPath = "F:/output"
@@ -31,8 +31,8 @@ fun main(args: Array<String>) {
         svnUser = "yangzh"
         svnPassword = "123456"
 
-        svn("http://192.168.72.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/LIANLIAN_CARD_SERVICE/") {
-            add(38120)
+        svn("http://192.168.72.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/") {
+            add(37774)
         }
 
     }
@@ -41,8 +41,8 @@ fun main(args: Array<String>) {
 
 
     fun diff() {
-        val project = "LIANLIAN_STATIC"
-        val oldFile = "F:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\智慧后勤\\$project.war.zip"
+        val project = "JIEKA_UNIFIED"
+        val oldFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\智慧后勤1.01\\$project.war.zip"
         val newFile = "F:\\output\\$project.war.zip"
 
         val diff = Diff(oldFile,newFile)

@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
         targetPath = "F:/output"
 
         // 是否根据svn版本号获取。false：根据文件修改时间获取
-        isFromSvn = true
+        versionControl = "svn"
 
         // 获取修改时间之后的变动文件
         fromDate = "2018-01-11 16:30:00"
@@ -32,11 +32,11 @@ fun main(args: Array<String>) {
         svnPassword = "123456"
 
         svn("http://192.168.72.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/") {
-            add(38059)
+            add(38118)
         }
 
         svn("http://192.168.72.13/svn/LIANLIAN_WXSCHOOL/trunk/") {
-            add(4737)
+            add(4750)
         }
 
     }

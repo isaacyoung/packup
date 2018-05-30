@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
     config = configBuilder {
 
         // 项目路径
-        projectPath = "E:/workspace"
+        projectPath = "E:\\yunma\\interface"
 
         // 编译环境 eclipse or idea
         // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
@@ -19,10 +19,10 @@ fun main(args: Array<String>) {
         mainProject = "LIANLIAN_INTERFACE"
 
         // 输出路径
-        targetPath = "E:/output"
+        targetPath = "F:/output"
 
         // 是否根据svn版本号获取。false：根据文件修改时间获取
-        isFromSvn = true
+        versionControl = "svn"
 
         // 获取修改时间之后的变动文件
         fromDate = "2018-01-11 16:30:00"
@@ -31,17 +31,11 @@ fun main(args: Array<String>) {
         svnUser = "yangzh"
         svnPassword = "123456"
 
-        svn("http://192.168.1.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/LIANLIAN_INTERFACE/") {
-            between(37675,37676)
+        svn("http://192.168.72.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/") {
+            add(38142)
         }
-        svn("http://192.168.1.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/LIANLIAN_CARD_SERVICE/") {
-
-        }
-        svn("http://192.168.1.13/svn/logistics/source/trunk/LIANLIAN_LOGISTICS_COMMON/") {
-
-        }
-        svn("http://192.168.1.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/LIANLIAN_UTILITY/") {
-
+        svn("http://192.168.72.13/svn/logistics/source/trunk/LIANLIAN_LOGISTICS_COMMON/") {
+            add(1552)
         }
 
     }

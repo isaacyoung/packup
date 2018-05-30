@@ -23,7 +23,9 @@ class Config : Tag("cn.isaac.config.getConfig") {
     lateinit var ide: String
     lateinit var targetPath: String
     lateinit var fromDate: String
-    var isFromSvn = true // svn || modifed file
+    var versionControl = "git" // none git svn
+    lateinit var beginGitNum: String
+    lateinit var endGitNum: String
     lateinit var svnUser: String
     lateinit var svnPassword: String
 

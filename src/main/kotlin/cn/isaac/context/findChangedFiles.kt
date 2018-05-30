@@ -1,6 +1,7 @@
 package cn.isaac.context
 
 import cn.isaac.config.config
+import cn.isaac.git.GitClient
 import cn.isaac.svn.SvnClient
 import java.io.File
 import java.text.SimpleDateFormat
@@ -19,7 +20,8 @@ val sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
  */
 fun getChangedFiles(): List<String> {
     return when {
-        config.isFromSvn -> getSvnFiles()
+        config.versionControl == "svn" -> getSvnFiles()
+        config.versionControl == "git" -> getGitFiles()
         else -> getModifiedFiles()
     }
 }
@@ -40,6 +42,10 @@ fun getModifiedFiles() = File(config.projectPath).walk().maxDepth(Int.MAX_VALUE)
  */
 fun getSvnFiles(): List<String> {
     return SvnClient.getFilesByRevision()
+}
+
+fun getGitFiles(): List<String> {
+    return GitClient.getFilesByRevision()
 }
 
 /**

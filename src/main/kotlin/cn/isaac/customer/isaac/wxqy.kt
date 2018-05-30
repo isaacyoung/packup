@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
         targetPath = "F:/output"
 
         // 是否根据svn版本号获取。false：根据文件修改时间获取
-        isFromSvn = true
+        versionControl = "svn"
 
         // 获取修改时间之后的变动文件
         fromDate = "2018-04-12 12:00:00"
@@ -38,12 +38,11 @@ fun main(args: Array<String>) {
 
         // static
         svn("http://192.168.72.13/svn/logistics/source/trunk/LIANLIAN_STATIC/") {
-            add(1516)
+            add(1580)
         }
 
         svn("http://192.168.72.13/svn/LIANLIAN_WXSCHOOL/trunk/") {
-            add(4742)
-            between(4743,4746)
+            add(4755)
         }
 
     }
@@ -52,9 +51,9 @@ fun main(args: Array<String>) {
 
 
     fun diff() {
-        val project = "LIANLIAN_STATIC"
-        val oldFile = "E:\\work\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\企业微信后台二级宫格\\$project.war.zip"
-        val newFile = "E:\\output\\$project.war.zip"
+        val project = "LIANLIAN_WXQY"
+        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180515萧山机场调整\\$project.war.zip"
+        val newFile = "F:\\output\\$project.war.zip"
 
         val diff = Diff(oldFile,newFile)
         diff.run()
