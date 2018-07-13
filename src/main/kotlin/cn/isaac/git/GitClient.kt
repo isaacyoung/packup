@@ -31,7 +31,7 @@ object GitClient {
 
         val log = git.diff().setOldTree(oldTreeIter).setNewTree(newTreeIter).call()
         log.forEach {
-            result.add(config.projectPath + "\\"+ it.newPath)
+            result.add((config.projectPath + "\\"+ it.newPath).replace("\\","/"))
         }
 
         git.close()

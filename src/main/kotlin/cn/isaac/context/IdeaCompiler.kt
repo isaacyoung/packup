@@ -87,16 +87,23 @@ class IdeaCompiler {
         val fromTargetPath = config.projectPath + "/" + config.mainProject + "/out/production"
         var fromFilePath = fromTargetPath + "/" + getProjectName(path) + path.substring(path.indexOf("/src/") + 4)
         fromFilePath = fromFilePath.replace(".java", ".class")
-        var targetFilePath = fromFilePath.replace(fromTargetPath, config.targetPath)
-        val projectName = getProjectName(targetFilePath)
-        targetFilePath = targetFilePath.replace(projectName, "$projectName/WEB-INF/classes")
-
-        if (File(fromFilePath).exists()) {
-            File(fromFilePath).copyTo(File(targetFilePath), true)
-            context.packedFilesList.add(path)
-        } else {
+        if (!File(fromFilePath).exists()) {
             println("$fromFilePath 未找到")
+            return
         }
+
+        val folderPath = fromFilePath.substring(0,fromFilePath.lastIndexOf("/"))
+        val fileName = fromFilePath.substring(fromFilePath.lastIndexOf("/")+1).replace(".class","")
+        File(folderPath).walk().maxDepth(1)
+                .filter { it.path.replace("\\","/").startsWith("$folderPath/$fileName") }
+                .forEach {
+                    val tempPath = it.path.replace("\\","/")
+                    var targetFilePath = tempPath.replace(fromTargetPath, config.targetPath)
+                    val projectName = getProjectName(targetFilePath)
+                    targetFilePath = targetFilePath.replace(projectName, "$projectName/WEB-INF/classes")
+                    File(tempPath).copyTo(File(targetFilePath), true)
+                    context.packedFilesList.add(tempPath)
+                }
     }
 
 }

@@ -36,6 +36,9 @@ object PackUpManager {
      * 项目依赖
      */
     fun copyCommonFiles() {
+        if (context.packedFilesList.size == 0) {
+            return
+        }
         val fromFolder = hashSetOf<String>()
         val toFolder = hashSetOf<String>()
         File(config.targetPath).listFiles()

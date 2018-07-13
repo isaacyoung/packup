@@ -31,7 +31,7 @@ object SvnClient {
                         if (path.endsWith(")")) {
                             path = path.substring(0,path.indexOf("("))
                         }
-                        result.add(config.projectPath + substringSvnPath(path))
+                        result.add((config.projectPath + substringSvnPath(path)).replace("\\","/"))
                     }
 
                 }

@@ -15,7 +15,7 @@ fun main(args: Array<String>) {
     config = configBuilder {
 
         // 项目路径
-        projectPath = "E:\\git\\zhhq"
+        projectPath = "E:/git/zhhq"
 
         // 编译环境 eclipse or idea
         // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
@@ -29,8 +29,8 @@ fun main(args: Array<String>) {
 
         // 版本 none git svn
         versionControl = "git"
-        beginGitNum = "0862896e7329e064d90b28495862e6294dd7373d"
-        endGitNum = "159e88f046850ae7d0794bb8b8f7ac14f186f869"
+        beginGitNum = "03014cd7d27746b406e4bd4c3cb7a991179aed19"
+        endGitNum = "11552f9665a35647287342d9421984b442805324"
 
         // 获取修改时间之后的变动文件
         fromDate = "2018-01-11 16:30:00"
@@ -45,16 +45,16 @@ fun main(args: Array<String>) {
 
     }
 
-//    PackUpManager.run()
+    PackUpManager.run()
 
 
     fun diff() {
         val project = "YUNMA_JIAOFEI_SERVICE"
-        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180604缴费大厅app\\$project.war.zip"
+        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180713缴费大厅优化\\$project.war.zip"
         val newFile = "F:\\output\\$project.war.zip"
 
         val diff = Diff(oldFile,newFile)
         diff.run()
     }
-    diff()
+//    diff()
 }
