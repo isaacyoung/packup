@@ -84,7 +84,7 @@ class IdeaCompiler {
             return
         }
 
-        val fromTargetPath = config.projectPath + "/" + config.mainProject + "/out/production"
+        val fromTargetPath = (config.projectPath + "/" + config.mainProject + "/out/production").replace("\\","/")
         var fromFilePath = fromTargetPath + "/" + getProjectName(path) + path.substring(path.indexOf("/src/") + 4)
         fromFilePath = fromFilePath.replace(".java", ".class")
         if (!File(fromFilePath).exists()) {
@@ -92,7 +92,7 @@ class IdeaCompiler {
             return
         }
 
-        val folderPath = fromFilePath.substring(0,fromFilePath.lastIndexOf("/"))
+        val folderPath = fromFilePath.substring(0, fromFilePath.lastIndexOf("/")).replace("\\", "/");
         val fileName = fromFilePath.substring(fromFilePath.lastIndexOf("/")+1).replace(".class","")
         File(folderPath).walk().maxDepth(1)
                 .filter { it.path.replace("\\","/").startsWith("$folderPath/$fileName") }
