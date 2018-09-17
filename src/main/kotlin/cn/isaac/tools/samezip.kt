@@ -13,17 +13,19 @@ class SameZip(oldFile: String, newFile: String) {
     private val newZipFiles = hashSetOf<String>()
     private val oldZipFiles = hashSetOf<String>()
     private val sameFiles = hashSetOf<String>()
-    private var oldZip: ZipFile = ZipFile(File(oldFile))
-    private var newZip: ZipFile = ZipFile(File(newFile))
 
     init {
-        newZip.stream().forEach {
-            newZipFiles.add(it.name)
+        File(oldFile).walk().maxDepth(1).filter { it.endsWith(".zip") }.forEach {
+            ZipFile(it).stream().forEach {
+                oldZipFiles.add(it.name)
+            }
+        }
+        File(newFile).walk().maxDepth(1).filter { it.endsWith(".zip") }.forEach {
+            ZipFile(it).stream().forEach {
+                newZipFiles.add(it.name)
+            }
         }
 
-        oldZip.stream().forEach {
-            oldZipFiles.add(it.name)
-        }
     }
 
     fun run() {
@@ -41,9 +43,8 @@ class SameZip(oldFile: String, newFile: String) {
 }
 
 fun main(args: Array<String>) {
-    val project = "LIANLIAN_MNG_LOGISTICS"
-    val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180709身份认证中心数据同步\\$project.war.zip"
-    val newFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180713缴费大厅优化\\$project.war.zip"
+    val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\01-待测试\\20180728交易统计"
+    val newFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\01-待测试\\20180802财务需求"
 
     val same = SameZip(oldFile,newFile)
     same.run()

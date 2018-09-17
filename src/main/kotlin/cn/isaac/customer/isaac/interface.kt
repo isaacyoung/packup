@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
     config = configBuilder {
 
         // 项目路径
-        projectPath = "E:\\yunma\\interface"
+        projectPath = "E:/yunma/interface"
 
         // 编译环境 eclipse or idea
         // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
@@ -25,17 +25,29 @@ fun main(args: Array<String>) {
         versionControl = "svn"
 
         // 获取修改时间之后的变动文件
-        fromDate = "2018-01-11 16:30:00"
+        fromDate = "2018-09-10 16:30:00"
 
         // svn账号
         svnUser = "yangzh"
         svnPassword = "123456"
 
         svn("http://192.168.72.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/") {
-            add(38142)
+            add(39003)
+            add(39015)
+            add(39019)
+            add(39022)
+            between(39024,39026)
+            add(39043)
+            add(39046)
+            add(39047)
+            add(39060)
+            add(39061)
+            add(39063)
+            add(39065)
+            add(39066)
         }
         svn("http://192.168.72.13/svn/logistics/source/trunk/LIANLIAN_LOGISTICS_COMMON/") {
-            add(1552)
+            add(1618)
         }
 
     }

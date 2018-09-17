@@ -9,14 +9,14 @@ fun main(args: Array<String>) {
     config = configBuilder {
 
         // 项目路径
-        projectPath = "E:/yunma/mng"
+        projectPath = "E:/yunma"
 
         // 编译环境 eclipse or idea
         // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
         ide = "idea"
 
         // 主项目 ide=idea有效
-        mainProject = "LIANLIAN_MNG_LOGISTICS"
+        mainProject = "CARD_EASYTONG"
 
         // 输出路径
         targetPath = "F:/output"
@@ -25,14 +25,14 @@ fun main(args: Array<String>) {
         versionControl = "svn"
 
         // 获取修改时间之后的变动文件
-        fromDate = "2018-01-11 16:30:00"
+        fromDate = "2018-06-06 10:00:00"
 
         // svn账号
         svnUser = "yangzh"
         svnPassword = "123456"
 
-        svn("http://192.168.72.13/svn/logistics/source/trunk/") {
-            add(1324)
+        svn("http://192.168.72.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/") {
+            add(39000)
         }
 
     }
@@ -42,7 +42,7 @@ fun main(args: Array<String>) {
 
     fun diff() {
         val project = "LIANLIAN_WXSCHOOL_LOGISTICS_SERVICE"
-        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180328旧宫格增加会员绑定等\\$project.war.zip"
+        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180420广告点击统计\\$project.war.zip"
         val newFile = "F:\\output\\$project.war.zip"
 
         val diff = Diff(oldFile,newFile)

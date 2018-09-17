@@ -38,11 +38,11 @@ fun main(args: Array<String>) {
 
         // static
         svn("http://192.168.72.13/svn/logistics/source/trunk/LIANLIAN_STATIC/") {
-            add(1580)
+//            add(1580)
         }
 
         svn("http://192.168.72.13/svn/LIANLIAN_WXSCHOOL/trunk/") {
-            add(4755)
+            add(4762)
         }
 
     }

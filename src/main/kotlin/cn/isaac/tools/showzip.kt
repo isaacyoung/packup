@@ -13,7 +13,7 @@ import java.util.zip.ZipFile
 object ShowZipFiles {
     @JvmStatic
     fun main(args: Array<String>) {
-        val filePath = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\待测试\\20180710缴费大厅订单统计"
+        val filePath = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180728交易统计"
         File(filePath).walk().maxDepth(1).forEach {
             if (it.isFile && it.path.endsWith(".zip")) {
                 ZipFile(it).stream().forEach {

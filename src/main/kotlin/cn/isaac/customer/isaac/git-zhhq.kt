@@ -29,8 +29,8 @@ fun main(args: Array<String>) {
 
         // 版本 none git svn
         versionControl = "git"
-        beginGitNum = "03014cd7d27746b406e4bd4c3cb7a991179aed19"
-        endGitNum = "11552f9665a35647287342d9421984b442805324"
+        beginGitNum = "70bb477e46c9072c038230328a65810b46719121"
+        endGitNum = "1fe5ab8fdee8a409fe228d234b103e15a997cb7d"
 
         // 获取修改时间之后的变动文件
         fromDate = "2018-01-11 16:30:00"
@@ -49,8 +49,8 @@ fun main(args: Array<String>) {
 
 
     fun diff() {
-        val project = "YUNMA_JIAOFEI_SERVICE"
-        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180713缴费大厅优化\\$project.war.zip"
+        val project = "LIANLIAN_MNG_LOGISTICS"
+        val oldFile = "F:\\LIANLIAN_DAYLY\\生产环境\\升级申请\\升级文件列表\\20180709身份认证中心数据同步\\$project.war.zip"
         val newFile = "F:\\output\\$project.war.zip"
 
         val diff = Diff(oldFile,newFile)

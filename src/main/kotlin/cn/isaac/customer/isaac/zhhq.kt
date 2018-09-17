@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
     config = configBuilder {
 
         // 项目路径
-        projectPath = "E:\\yunma\\zhhq"
+        projectPath = "E:/yunma/zhhq"
 
         // 编译环境 eclipse or idea
         // eclipse 编译后的文件路径须在/WebRoot/WEB-INF/classes
