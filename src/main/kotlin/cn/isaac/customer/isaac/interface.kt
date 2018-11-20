@@ -32,22 +32,11 @@ fun main(args: Array<String>) {
         svnPassword = "123456"
 
         svn("http://192.168.72.13/svn/LSMART/LIANLIAN_ZHIHUI/trunck/source/") {
-            add(39003)
-            add(39015)
-            add(39019)
-            add(39022)
-            between(39024,39026)
-            add(39043)
-            add(39046)
-            add(39047)
-            add(39060)
-            add(39061)
-            add(39063)
-            add(39065)
-            add(39066)
+            add(39436)
+            add(39462)
         }
         svn("http://192.168.72.13/svn/logistics/source/trunk/LIANLIAN_LOGISTICS_COMMON/") {
-            add(1618)
+//            add(1618)
         }
 
     }

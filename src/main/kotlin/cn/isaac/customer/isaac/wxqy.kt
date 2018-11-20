@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
 
         // common
         svn("http://192.168.72.13/svn/logistics/source/trunk/LIANLIAN_LOGISTICS_COMMON/") {
-//            between(1139,1161)
+//            add(1619)
         }
 
         // static
@@ -42,7 +42,7 @@ fun main(args: Array<String>) {
         }
 
         svn("http://192.168.72.13/svn/LIANLIAN_WXSCHOOL/trunk/") {
-            add(4762)
+            add(4773)
         }
 
     }
