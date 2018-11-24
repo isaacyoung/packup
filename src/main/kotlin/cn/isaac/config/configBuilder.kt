@@ -28,6 +28,7 @@ class Config : Tag("cn.isaac.config.getConfig") {
     lateinit var endGitNum: String
     lateinit var svnUser: String
     lateinit var svnPassword: String
+    var isWarPackage = true
 
     val svnList = arrayListOf<Svn>()
 

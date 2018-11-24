@@ -80,16 +80,18 @@ object PackUpManager {
     fun packup() {
         val root = File(config.targetPath).name
         val rt = Runtime.getRuntime()
-        File(config.targetPath).walk().maxDepth(1)
-                .filter { it.isDirectory }
-                .filter { it.name != root }
-                .filter { !it.name.endsWith("_COMMON") && !it.name.endsWith("_UTILITY")}
-                .forEach { it.renameTo(File("$it.war")) }
+        if (config.isWarPackage) {
+            File(config.targetPath).walk().maxDepth(1)
+                    .filter { it.isDirectory }
+                    .filter { it.name != root }
+                    .filter { !it.name.endsWith("_COMMON") && !it.name.endsWith("_UTILITY") }
+                    .forEach { it.renameTo(File("$it.war")) }
+        }
 
         File(config.targetPath).walk().maxDepth(1)
                 .filter { it.isDirectory }
                 .filter { it.name != root }
-                .filter { it.name.endsWith(".war") }
+                .filter { !it.name.endsWith("_COMMON") && !it.name.endsWith("_UTILITY") }
                 .forEach {
                     rt.exec("cmd /C cd /D ${config.targetPath} && jar cfM ${it.name}.zip ${it.name}/")
                 }

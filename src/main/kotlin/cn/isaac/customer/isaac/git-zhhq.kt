@@ -29,8 +29,8 @@ fun main(args: Array<String>) {
 
         // 版本 none git svn
         versionControl = "git"
-        beginGitNum = "a1edab860234eed44ecc666a026af99adafa54bc"
-        endGitNum = "e2416d7fa39f9ebd4044ebea628594946aa1f452"
+        beginGitNum = "7bf0994b8fdc773c8eed681518772e4ed6fc6516"
+        endGitNum = "b541085920287aed40dca7caf0a97dfbd776db85"
 
         // 获取修改时间之后的变动文件
         fromDate = "2018-10-12 15:40:00"
@@ -38,6 +38,8 @@ fun main(args: Array<String>) {
         // svn账号
         svnUser = "yangzh"
         svnPassword = "123456"
+
+        isWarPackage = false
 
         svn("http://192.168.72.13/svn/logistics/source/trunk/") {
             add(1613)
