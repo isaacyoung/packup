@@ -24,7 +24,7 @@ object SvnClient {
                         SVNURL.parseURIEncoded(url),
                         arrayOf("."),
                         SVNRevision.create(it.toLong()), SVNRevision.create(it.toLong()), SVNRevision.create(it.toLong()),
-                        true, true, Long.MAX_VALUE
+                        true, true, 10000
                 ) {
                     it.changedPaths.forEach { _, u ->
                         var path = u.toString()
